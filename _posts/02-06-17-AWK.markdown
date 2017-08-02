@@ -1,0 +1,483 @@
+---
+layout: post
+title:  "AWK"
+date:   02.06.2017
+categories: [AWK]
+tags: 
+ - AWK
+---
+
+**Regular Expressions**
+
+  Regular expressions string ifadeleri manipüle etmemizi kolaylaştıran yapılması gereken
+  istekleri karakterlerle temsil eden yapılardır.
+
+```sh
+  .            herhangi bir karakter.
+  \w \d \s     kelime, sayı, boşluk.
+  \W \D \S     kelime değil, sayı, boşluk.
+  [abc]	       herhangi bir a, b, veya c.
+  [^abc]       a, b, yada c değil.
+  [a-g]	       a & g arasındaki karakterler.
+  [A-Z]        A & Z arasındaki karakterler.
+  [0-9]        0 & 9 arasındaki sayılar.
+  [a-z]        a & z arasındaki karakterler.
+  [a-zA-Z]     Küçük veya Büyük harf gözetmez.
+  [a-zA-Z 0-9] Küçük,Büyük harf ve Sayı gözetmez.
+```
+```sh
+  $ awk 'script' filename
+```
+```sh
+  $ awk '//{print}' /home/user/learn.path #içeriği basacaktır
+```
+```sh
+  $ awk '/l.c/{print}' /etc/hosts #l ve c arasında herhangi bir veya birden çok karakter olabilir
+```
+```sh
+  $ awk '/l*c/{print}' /etc/hosts #l veya c karakterlerini içeren ifadeleri getirir
+```
+```sh
+  $ awk '/[xyz]/{print}' /etc/hosts #x,y ve z karakterlerini içeren ifadeleri getirir
+```
+```sh
+  $ awk '/[Xx]y/{print}' /etc/hosts #X veya x ile başlayan ve y ile devam eden ifadeleri getirir
+```
+```sh
+  $ awk '/[0-9]/{print}' /etc/hosts #0 ile 9 arası rakam içermesi yeterli.
+```
+```sh
+  $ awk '/^XX/{print}' /etc/hosts #XX ile başlayan ifadeleri getirir.
+```
+```sh
+  $ awk '/ost$/{print}' /etc/hosts #"ost" ile biten ifadeleri getirir.
+```
+```sh
+  $ awk '/\ost/{print}' /etc/hosts #içerisinde "ost" geçen ifadeyi getirir.
+```
+**Printing Column and Fields**
+
+```sh
+  $ touch learningAWK.txt
+  $ echo "uno dos tres cuatro" >> learningAWK.txt
+  $ awk '//{print $1 $2 $3}' learningAWK.txt
+  #Ilk 3 kolon getirilecektir.
+```
+```sh
+  $ touch learningAWK.txt
+  $ nano  learningAWK.txt
+    *Country   *Prices          *Colors
+      -Turkey    -Cheap           -Red-White
+      -Spain     -Expensive       -Orange-Red
+      -Germany   -More exprensive -Black-Red-Yellow
+  $ awk '//{print $1 $2}' learningAWK.txt
+    # CountryPrices
+    # TurkeyCheap
+    # SpainExpensive
+    # GermanMoreexprensive
+  $ awk '//{printf "%-10s %s\n",$2, $3 }'
+    # Prices     Colors
+    # Cheap      Red-White
+    # Expensive  Orange-Red
+    # Moreexprensive Black-Red-Yellow
+```
+**Filtering**
+
+```sh
+  $ touch food.list
+  $ nano  food.list
+    No	Item_Name    Quantity  Price
+    1	   Mangoes     10      $2.45
+    2	   Apples      20      $1.50
+    3	   Bananas     5       $0.90
+    4	   Pineapples  10      $3.46
+    5	   Oranges     10      $0.78
+    6	   Tomatoes    5       $0.55
+    7	   Onions      5       $0.45
+```
+```sh
+  $ awk '/ *\$[2-9]\.[0-9][0-9] */' food.list
+    1       Mangoes                    10           $2.45
+    4       Pineapples                 10           $3.46
+    #Listede $ işareti ile başlayan 2 ile 9 arasında olan karakter bulunur
+    #ve '.'dan sonrası
+    #Birinci ve Ikinci hanesi 0 ile 9 arasında olan sayı getirilir
+```
+```sh
+  $ awk '/ *\$[2-9]\.[0-9][0-9] */ { print $1, $2, $3, $4, "*" ; } ' food.list
+    1 Mangoes 10 $2.45 *
+    4 Pineapples 10 $3.46 *
+    #Listede $ işareti ile başlayan 2 ile 9 arasında olan karakter bulunur
+    #ve '.'dan sonrası
+    #Birinci ve Ikinci hanesi 0 ile 9 arasında olan sayı getirilir
+    #Bunları içeren ilk 4 kolon basılır ve 5. kolon yerine '*' basılır
+```
+```sh
+  $ awk '/ *\$[2-9]\.[0-9][0-9] */ { print $1, $2, $3, $4, "*" ; } / *\$[0-1]\.[0-9][0-9] */' food.list
+    1 Mangoes 10 $2.45 *
+    2       Apples                     20           $1.50
+    3       Bananas                    5            $0.90
+    4 Pineapples 10 $3.46 *
+    5       Oranges                    10           $0.78
+    6       Tomatoes                   5            $0.55
+    7       Onions                     5            $0.45
+    #Listede $ işareti ile başlayan 2 ile 9 arasında olan karakter bulunur
+    #ve '.'dan sonrası
+    #Birinci ve Ikinci hanesi 0 ile 9 arasında olan sayı getirilir
+    #Bunları içeren ilk 4 kolon basılır ve 5. kolon yerine '*' basılır
+    #Ayrıca
+    #Listede $ işareti ile başlayan 0 ile 1 arasında olan karakter bulunur
+    #ve '.'dan sonrası
+    #Birinci ve Ikinci hanesi 0 ile 9 arasında olan sayı getirilir
+```
+```sh
+  $ awk '/*/{ print $1, $2, $3, $4, "*" ; } / *\$[0-1]\.[0-9][0-9] */' food.list
+    2       Apples                     20           $1.50
+    3       Bananas                    5            $0.90
+    5       Oranges                    10           $0.78
+    6       Tomatoes                   5            $0.55
+    7       Onions                     5            $0.45
+    #Listede $ işareti ile başlayan 0 ile 1 arasında olan karakter bulunur ve
+    # '.'dan sonrası
+    #Birinci ve Ikinci hanesi 0 ile 9 arasında olan sayı getirilir
+    #Ilk 4 kolon için uygulanır
+```
+**Comparison Operators**
+
+```sh
+    # > – büyük
+    # < – küçük
+    # >= – büyük veya eşit
+    # <= – küçük veya eşit
+    # == – eşit
+    # != – eşit değil
+    # değer ~ / ifade/ – 'true' eğer ifade eşleşiyorsa
+    # değer !~ / ifade/ – 'true' eğer ifade eşleşmiyorsa
+```
+```sh
+  $ awk '$3 <= 30 { printf "%s\t%s\n", $0,"**" ; }' food.list
+  1       Mangoes                    10           $2.45   **
+  2       Apples                     20           $1.50   **
+  3       Bananas                    5            $0.90   **
+  4       Pineapples                 10           $3.46   **
+  5       Oranges                    10           $0.78   **
+  6       Tomatoes                   5            $0.55   **
+  7       Onions                     5            $0.45   **
+    #3. Kolonun 30 dan küçük veya eşit değerleri varsa sonraki kolonları getirir
+```
+```sh
+  $ awk '$3 <= 20 { printf "%s\t%s\n", $0,"TRUE" ; } $3 < 10  { print $0 ;} ' food.list
+  1       Mangoes                    10           $2.45   TRUE
+  2       Apples                     20           $1.50   TRUE
+  3       Bananas                    5            $0.90   TRUE
+  3       Bananas                    5            $0.90   #Ikinci ifadeye uymaz
+  4       Pineapples                 10           $3.46   TRUE
+  5       Oranges                    10           $0.78   TRUE
+  6       Tomatoes                   5            $0.55   TRUE
+  6       Tomatoes                   5            $0.55   #Ikinci ifadeye uymaz
+  7       Onions                     5            $0.45   TRUE
+  7       Onions                     5            $0.45   #Ikinci ifadeye uymaz
+```
+```sh
+  $ touch food.list
+  $ nano  food.list
+  # No      Item_Name               Price           Quantity
+  # 1       Mangoes                 $3.45              5
+  # 2       Apples                  $2.45              25
+  # 3       Pineapples              $4.45              55
+  # 4       Tomatoes                $3.45              25
+  # 5       Onions                  $1.45              15
+  # 6       Bananas                 $3.45              30
+  $ awk '$4 <= 20 { printf "%s\t%s\n", $0,"*" ; } $4 > 20 { print $0 ;} ' food.list
+  # No  Item_Name       Price    Quantity
+  # 1   Mangoes         $3.45     5       *
+  # 2   Apples          $2.45     25
+  # 3   Pineapples      $4.45     55
+  # 4   Tomatoes        $3.45     25
+  # 5   Onions          $1.45     15      *
+  # 6   Bananas         $3.45     30
+  #4. kolonda 20'den küçük değerleri bas ve 4. kolonda 20'den büyük değerler.
+```
+**Compound Expressions**
+
+```sh
+  ( ifade_1 ) && ( ifade_2 )
+  ( ifade_1 ) || ( ifade_2 )
+```
+**Read Awk input from STDIN**
+
+```sh
+  $ dir -l | awk '{print $3,$4,$9;}'
+  # user user food.list
+  # user user beverage.list
+  $ dir -l | awk '$3=="user" {print $1,$3,$4, $9;} '
+  # -rw-rw-r-- user user food.list
+  # -rw-rw-r-- user user beverage.list
+```
+**AWK Variables,Expressions and Operators**
+
+```sh
+  $ nano names.txt
+  $ more names.txt
+  # 1.      Ron     kon     M
+  # 2.      zonek   adad    M
+  # 3.      lalal   adsd    M
+  # 4.      hosad   asds    M
+  # 5.      adsda   rtre    M
+  # 6.      fasds   yuıu    M
+  $ awk '/lal/{ first_name=$2 ; second_name=$3 ; print first_name, second_name ; }' names.txt
+  # lalal adsd
+```
+```sh
+  $ uname -a | awk '{hostname=$2; print hostname;}'
+  # user
+```
+**Begin - End**
+
+Öncelikle Awk'nın yapısı şu şekildedir;
+
+```sh
+  awk 'script' filepath
+```
+Script içeriği ise ;
+
+```sh
+  /pattern/{actions}
+```
+Scriptimizi form şeklinde yazabiliriz;
+
+```sh
+  awk ' BEGIN {actions}
+          /pattern/{actions}
+          /pattern/{actions}
+        END {actions}' filepath
+```
+```sh
+  awk ' BEGIN {  print "Dosyadaki AWK kelimesi kaçtane vardır :" ; }
+  /AWK/ {  counter+=1  ;  }
+  END {  printf "%s\n",  counter  ; }
+  '  filepath
+  #Buradaki betik Awk'yı arar ve bulduğunda counter'ı bir artırır.
+  #En sonunda da counter'ı ekrana basacaktır.
+```
+**BUILT-IN VARIABLES**
+
+```sh
+  $ awk ' { print FILENAME } ' ~/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+  # /home/awk/domains.txt
+```
+```sh
+  $ awk 'END { print "Dosya içerisindeki satır sayısı: ", NR } ' ~/domains.txt
+  # Dosya içerisindeki kayıtların sayısı 12
+```
+```sh
+  awk '{ print "Satır Sayısı:",NR,"--",NF,"Alan Sayısı" ; }'
+  # Satır Sayısı: 1 -- 1 Alan Sayısı
+  # Satır Sayısı: 2 -- 1 Alan Sayısı
+  # Satır Sayısı: 3 -- 1 Alan Sayısı
+  # Satır Sayısı: 4 -- 1 Alan Sayısı
+  # Satır Sayısı: 5 -- 1 Alan Sayısı
+  # Satır Sayısı: 6 -- 1 Alan Sayısı
+  # Satır Sayısı: 7 -- 1 Alan Sayısı
+  # Satır Sayısı: 8 -- 1 Alan Sayısı
+  # Satır Sayısı: 9 -- 1 Alan Sayısı
+  # Satır Sayısı: 10 -- 1 Alan Sayısı
+  # Satır Sayısı: 11 -- 1 Alan Sayısı
+  # Satır Sayısı: 12 -- 1 Alan Sayısı
+```
+  _'FS'_ ile özel şekilde ayırma yapabiliriz.
+
+```sh
+  $ awk -F':' '{ print $1, $4 ;}' /etc/passwd
+    # Linux dosya sisteminde dosyalar ':' ile ayrılmıştır.
+    # F'in önüne gelen karakter ile ayırma yöntemi belirleniyor.
+```
+```sh
+  $ awk ' BEGIN {  FS=":" ; }  { print $1, $4, $6  ; } ' /etc/passwd
+    # FS'i değişken olarak kullanabiliriz.
+```
+```sh
+  $ awk -F':' ' BEGIN { OFS="==>" ;} { print $1, $4 ;}' /etc/passwd
+    #Output file separator bize istediğimiz karakterler ile ayırma imkanı sağlar.
+```
+**Shell Script in AWK**
+
+```sh
+  $ nano script.sh
+      # #!/bin/bash
+      # #Kullanıcı girişini oku!
+      read -p "Lütfen Kullanıcı giriniz:" username
+      # # /etc/passwd dosyası içerisinde 'Username'i ara ve tüm detayları ekrana bas.
+      #Çıkmadan öncede root'u bul root'un ilk değerini değişekene ata ve END' action'ınında ekrana bas.
+      cat /etc/passwd | awk "/$username/"'{ print $0 } /root/{root_variable=$1} END {print root_variable}'
+  $ chmod +x script.sh
+  $ ./script.sh
+```
+```sh
+  $ username = "user"
+  $ cat /etc/passwd | awk -v name="$username" ' $0 ~ name {print $0}'
+  # -v – AWK için değişken oluşturmayı sağlar
+  #  username – shell değişkeni
+  #  name – AWK değişkeni
+  # ' $0 ~ name {print $0}' burada eğer değerler eşleşiyorsa TRUE dönmesini sağlanır.
+  # '~' bu karakter sayesinde bu kontrol yapılır.
+  # TRUE değer döndüğü için ekrana basacaktır.
+```
+**Flow Control**
+
+  _IF-ELSE_
+
+    if (condition1){
+      actions1
+    }
+    else if (conditions2){
+      actions2
+    }
+    else{
+      actions3
+    }
+
+```sh
+  $ nano names.list
+    # Sarah L       35    	F
+    # Aaron Kili    40    	M
+    # John  Doo     20    	M
+    # Kili  Seth    49    	M
+  $ nano script.#!/bin/sh
+    # #!/bin/bash
+    # awk ' {
+    # if ( $3 <= 25 ){
+    #   print "Kullanıcı",$1,$2," 25 yaşından küçüktür." ;
+    # }
+    # else {
+    #   print "Kullanıcı",$1,$2,"25 yaşından büyüktür" ;
+    # }
+    # }'    ~/names.list   
+
+    # Kullanıcı Sarah L 25 yaşından büyüktür
+    # Kullanıcı Aaron Kili 25 yaşından büyüktür
+    # Kullanıcı John Doo  25 yaşından küçüktür.
+    # Kullanıcı Kili Seth 25 yaşından büyüktür
+
+    #Yorumlanırsa eğer okunan dosya için ;
+    # Eğer 3.kolondaki değerler 25 den küçük ise Ad ve Soyadlarını yazdır.
+    # Eğer değilse büyük olanlarının ad ve soyadlarını yazdır.
+```
+  _FOR_
+
+```sh
+  $ awk 'BEGIN{ for(counter=0;counter<=10;counter++){ print counter} }'
+  # 0
+  # 1
+  # 2
+  # 3
+  # 4
+  # 5
+  # 6
+  # 7
+  # 8
+  # 9
+  # 10
+```
+  _WHILE_
+
+```sh
+  #!/bin/bash
+  awk ' BEGIN{ counter=0 ;
+  while(counter<=10){
+    print counter;
+    counter+=1 ;
+    }
+  }'
+
+  #!/bin/bash
+  awk ' BEGIN{ counter=0 ;  
+  do{
+    print counter;  
+    counter+=1 ;    
+  }while (counter<=10)   
+  }'
+```
+**Shell Scripting in AWK Programming**
+
+```sh
+  #! /usr/bin/awk -f
+```
+
+- **#!**  -  script dosyasını okumak için kullanılır.
+- **/usr/bin/awk**  - yorumlayıcı'nın yolu gösterilir.
+- **-f**  - yorumlayıcıya dosyayı okuma parametresi verilir.
+
+```sh
+  $ vim script.awk  
+    # #! /usr/bin/awk -f
+    # BEGIN { printf "%s\n","Executable AWK script!" }
+  $ chmod +x script.awk
+  $ ./script.awk
+```
+```sh
+  $ vim script.awk  
+  # #! /usr/bin/awk -f
+  # #use BEGIN sepecial character to set FS built-in variable
+  # BEGIN { FS=":" }
+  # #search for username: user and print account details
+  # /user/ { print "Username :",$1,"User ID :",$3,"User GID :",$4 }
+  $ chmod +x script.awk
+  $ ./script.awk
+  # Username : user User ID : 1000 User GID : 1000
+  # Username : usern User ID : 1001 User GID : 1001
+
+  # öncelikle Başlangıç için FS ile dosya ayırma tercihi ayarlandı
+  # sonra user ekrana yazdırıldı.  
+```
+**Functions**
+
+```sh
+#!/usr/bin/awk -We
+function Rado(radius){
+return(3.14159 * radius)
+}
+
+BEGIN{
+  print Rado(1)
+  print Rado(2)
+}
+
+```
+**Structs**
+
+```sh
+#!/usr/bin/awk -We
+
+function printperson(p){
+	print p["lname"]
+	print p["fname"]
+	print p["phone"]
+}
+
+BEGIN{
+	person["lname"] = "User"
+	person["fname"] = "UserName"
+	person["phone"] = "123-456-7890"
+	printperson(person)
+	exit 0
+}
+```
+> to be continued…
+
+References :
+
+  [-Awk](https://www.tecmint.com)
+
+  [-Regexr](http://regexr.com/)

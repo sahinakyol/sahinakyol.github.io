@@ -1,0 +1,73 @@
+---
+layout: post
+title:  "Javascript DOM"
+date:   23.10.2016
+categories: [DOM]
+tags: 
+ - javascript
+---
+
+**DOM**
+
+Documents Object Model Html üzerinde nesnelere erişimizi sağlar.Ayrıca Dom için tüm elemanlar node'dur.
+Node olarak tanımlanığı için hiyerarşik bir yapı kullanırız.
+
+``` html
+  <hmtl>
+    <head></head>
+      <meta>
+        <script src="sample.js"></script>
+      <body>
+        <p id="sample">Sample Sentence</p>
+      </body>
+  </html>
+```
+
+``` js
+function colorChanging() {
+  document.getElementById('sample').color="red";
+}  
+```
+Node ilişkileri;
+
+      -parentElement              //Bir üst Element olan node.
+      -childNodes                 //Alt node'lar.
+      -children                   //Sadece Element olan alt node'lar.
+      -nextSibling                //Bir sonraki komşu node.
+      -nextElementSibling         //Bir sonraki Element olan komşu node.
+      -previousSibling            //Bir önceki node.
+      -previousElementSibling     //Bir önceki Element olan komşu node.
+      -firstChild                 //Altındaki ilk node
+      -firstElementChild          //Altındaki ilk Element olan node.
+      -lastChild                  //Altındaki son node
+      -lastElementChild           //Altındaki son Element olan node.
+
+**Events**
+
+  Olaylar kullanıcı yada pencere güdümlü fonksiyonlardır yani kullanıcı bir nokta üzerindeyken bir fonksiyon tetiklemek gibi yada pencere açılırken tetiklenen fonksiyon olay örneğidir.
+
+```html
+    <hmtl>
+        <body>
+          <a href="#" onMouseover="overText()">Coding JS!</a>
+            <script>
+                  function overText(){
+                    alert("We love community,Free Software and Open Source");
+                  }
+                  setTimeout(function(){
+                    alert("...");
+                  },2000); //2 sn bekleme yapar
+            </script>
+        </body>
+    </html>
+```
+Aşağıdaki "Coding JS!" yazısının üzerine geldiğinizde anlayacaksanız.
+
+ <a href="#" onMouseover="overText()">Coding JS!</a>
+  <script>
+        function overText(){
+          alert("We love community,Free Software and Open Source !!");
+        }
+  </script>  
+
+Birçok farklı fonksiyon vardır [daha fazlası için...](http://www.w3schools.com/tags/ref_eventattributes.asp)

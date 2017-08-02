@@ -1,0 +1,60 @@
+---
+layout: post
+title:  "Emu 8086 - Numbers"
+date:   07.05.2017
+categories: [Assembly]
+tags:
+ - Assembly
+---
+
+**Decimal Number**
+
+```shell
+    754 = 7*10² + 5*10¹ + 4*10⁰
+```
+**Hexadecimal**
+
+```shell
+    754 = 2*16² + F*16¹ + 2*16⁰ = 2F2
+    A = 10
+    B = 11
+    C = 12
+    D = 13
+    E = 14
+    F = 15    
+```
+**Binary**
+
+```shell
+  10 = 1*2³ + 0*2² + 1*2¹ + 0*2⁰ = 1010
+```
+<b>Insert Decimal Number: </b>
+<input type = "text" name = "decimal" id = "decimal" size = "15" maxlength = "15"
+style="color:black"/>
+<input type="button" value="Convert!" onclick="decimaltobinary()" style="color:black" />
+<br><br>
+
+<div id = "result"></div>
+
+<script type = "text/javascript">
+
+function decimaltobinary() {
+var x = document.getElementById("decimal").value;
+if ((/[^0-9]/g.test(x)) || x == "") {
+alert("You must enter an integer decimal number!");
+document.getElementById("decimal").value = "";
+document.getElementById("decimal").focus();
+return false;
+}
+x = parseInt(x);
+var binary = x.toString(2);
+var hexadecimal = x.toString(16).toUpperCase();
+var octal = x.toString(8);
+
+
+var figs = "The binary representation of " + "<strong>" + x + "</strong>" + " is " + "<strong>" + binary + "</strong>" + "<br>";
+figs = figs + "The hexadecimal representation of " + "<strong>" + x + "</strong>" + " is " + "<strong>" + hexadecimal + "</strong>" + "<br>";
+figs = figs + "The octal representation of " + "<strong>" + x + "</strong>" + " is " + "<strong>" + octal + "</strong>" + "<br>";
+document.getElementById("result").innerHTML = figs;
+}
+</script>

@@ -1,0 +1,67 @@
+---
+layout: post
+title:  "NodeJS"
+date:   18.11.2016
+categories: [NodeJS]
+tags: 
+ - nodeJS
+---
+
+**NodeJS Nedir**
+
+Javascript ile server-side taraflı uygulamalar yazabileceğiniz Chrome V8-JS engine üzerine inşa edilmiş,
+bir faramework.
+**Npm** paket yöneticisini kullanır çok yakın zamanda open source edilen **Yarn** paket yöneticisini'de kullanmaktadır.
+
+[NodeJS](https://nodejs.org/en/) Kurulum için kendi sitesini ziyaret etmelisiniz.
+
+
+```js
+  $ node -v
+  $ node
+  > console.log("If you dont want to regret, dont do things you regret.");
+  > If you dont want to regret, dont do things you regret.
+```
+
+**Modüller**
+
+Kendi uygulamamızı kütüphane gibi inşa edebiliriz fakat burada dikkat edilmesi gereken bir husus var ki o da fonksiyonlar export edilebilir olmalıdır.
+
+**require** komutu senkron çalışması itibariyle çalışma anında çağrılır böylece gereksiz yükün önüne geçilir.
+
+```js
+  $ touch node.js
+  $ touch node1.js
+```
+```js
+  $ nano node1.js
+  > module.exports = function () {
+    console.log("be like panda asian,black,white");
+    }
+  $ ...
+```
+```js
+  $ nano node.js
+  > var exa = require('./node1');
+  > exa();
+  $ node node.js
+  $ be like panda asian,black,white
+```
+```js
+  $ nano node.js
+  > var alpha = function(){
+    console.log("alpha wave");
+    }
+  > var beta = function(){
+    console.log("beta wave");
+    }
+  > exports.alpha = alpha;
+  > exports.beta = beta;
+  $ nano node1.js
+  > var vawe = require('./node')
+  > vawe.alpha();
+  > vawe.beta();
+  $ node node1.js
+```
+
+to be continued...

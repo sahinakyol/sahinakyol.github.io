@@ -1,0 +1,69 @@
+---
+layout: post
+title:  "JSP(Java Server Pages)"
+date:   23.09.2016
+categories: [JavaEE]
+tags: 
+ - JSP
+---
+
+JSP içerisinde Java kodlarını barındıran dinamik web sayfalarıdır.
+Başka bir ifadeyle statik HTML sayfalarını dinâmik hâle getirmek için kullanılan Java Teknolojisidir.
+Java kodlarımız  HTML kodları arasında gömülü olmasına rağmen tüm kodlar derlenirken tamamen HTML kodlarına dönüştürülür.
+JSP dosyamızın lifecycle'ı ise şu şekilde ".jsp->.java->.class" dönüştürülür ve Servlet container'a yüklenir.
+
+ HTML sayfalarına JSP kodlarını gömmek için  <% ....%> kullanılır.
+
+``` html
+<html >
+<head><title>JSP First Step</title></head>
+<body>
+  <% out.println("Hello there :)"); %>
+
+</body>
+</html>
+```
+Eğer değişken tanımlamak istersek  <%=.......%> kullanılır.
+
+``` html
+<body>
+<%
+String s="HERO";
+%>
+HERO is <%= s %>
+</body>
+```
+Birazdaha karmaşık görünen bir örnek verirsek nasıl Java ve Html kodlarının iç içe geçtiğini anlayabiliriz.
+
+``` html
+<body>
+<%
+String s="HERO";
+%>
+HERO is <%= s %>
+<br>                                         //Alt satıra iner.
+<table border="3">            //Tablonun kolon sayısını belirler.
+<%
+for(int i=0;i<10;i++)
+{                            //For dongusu baslangici parantez acilir fakat kapanmaz.
+%>
+<tr>
+<td>number</td>                        //Birinci kolon birinci hücre içi.
+<td><%=i+1 %></td>                 //Ikinci kolon birinci hücre içi.
+<td>Nereye Geldik biz</td>    //Üçüncü kolon birinci hücre içi.
+</tr>
+<%} %>                                      //Burada parantez kapanır.
+</table>
+</body>
+```
+Include anahtar kelimesi ile başka bir JSP dosyasını kendi dosyamıza ekleyebiliriz.
+
+``` html
+<%@ include file="hero.jsp"%>
+```
+Metodlarımızı ve değişkenlerimizi ise burada tanımlarız. <%!....%>
+Notlar:
+
+-Buradaki önemli nokta birkere tanımlanan değişken bir daha değişmez.Bundan dolayı birden fazla kullanmamız gereken değişkenleri burada tanımlarız.
+
+-JSP çok daha geniş bir konu olmasına rağmen burada sadece genel hatlarına değindim.
