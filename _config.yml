@@ -12,11 +12,11 @@ url: https://sahinakyol.github.io
 
 share:
   facebook: false
-  twitter: true
+  twitter: false
   gplus: false
-  linkedin: true
+  linkedin: false
   pinterest: false
-  email: true
+  email: false
 
 social:
   github: sahinakyol
