@@ -4,11 +4,11 @@ name: Sahin AKYOL
 description: Software Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: http://sahinakyol.com
+url: http://sahinakyol.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
-#baseurl: ''
+#baseurl: '/'
 
 share:
   facebook: false
@@ -53,21 +53,4 @@ kramdown:
   input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
   hard_wrap: true
 
-include: ['_pages', 'files', 'assets']
 exclude: ['README.md', 'LICENSE']
-
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      share: true
-      comments: true
-  -
-    scope:
-      path: ""
-      type: "pages"
-    values:
-layout: "page"
