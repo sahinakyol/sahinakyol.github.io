@@ -1,14 +1,14 @@
 # Jekyll configuration
 
 name: Sahin AKYOL
-description:
+description: Software Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: https://sahinakyol.github.io
+url: https://sahinakyol.com
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
-baseurl: '/'
+#baseurl: '/'
 
 share:
   facebook: false
@@ -20,10 +20,10 @@ share:
 
 social:
   github: sahinakyol
-  stackoverflow: ''
+  #stackoverflow: ''
   linkedin: sahinakyol
-  instagram: ''
-  lastfm: ''
+  #instagram: ''
+  twitter: 'sahinakyoll'
   rss: feed.xml
 
 # Google Analytics key, leave blank to ignore
@@ -38,6 +38,9 @@ yandex_metrica:
 disqus:
 comments: false
 
+contact:
+email: 'akyol991 [at] hotmail.com'
+
 permalink: /:year/:month/:title
 
 # Enable for using pages, more details are here: http://jekyllrb.com/docs/pagination/
@@ -50,4 +53,5 @@ kramdown:
   input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
   hard_wrap: true
 
+include: ['_pages', 'files', 'assets']
 exclude: ['README.md', 'LICENSE']
