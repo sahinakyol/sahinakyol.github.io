@@ -4,19 +4,19 @@ name: Sahin AKYOL
 description: Software Developer
 
 # Url is currently only used only for the RSS feed in feed.xml
-url: https://sahinakyol.com
+url: https://sahinakyol.github.io
 #url: http://localhost:4000
 
 # For a project page here should be a project name. Otherwise (for user's/organizaion's page leave it empty)
-#baseurl: '/'
+baseurl: '/posts'
 
 share:
   facebook: false
-  twitter: false
+  twitter: true
   gplus: false
-  linkedin: false
+  linkedin: true
   pinterest: false
-  email: false
+  email: true
 
 social:
   github: sahinakyol
@@ -65,14 +65,6 @@ defaults:
       layout: "post"
       share: true
       comments: true
-  -
-    scope:
-      path: ""
-      type: "drafts"
-    values:
-      layout: "post"
-      share: false
-      comments: false
   -
     scope:
       path: ""
