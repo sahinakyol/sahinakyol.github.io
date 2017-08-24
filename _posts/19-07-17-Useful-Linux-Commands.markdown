@@ -3,11 +3,12 @@ layout: post
 title:  "Useful Linux Commands"
 date:   19.07.2017
 categories: [Linux]
-tags: 
+tags:
  - Linux
 ---
 
-Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
+Some infos about linux shell scripting.Woww don't worry about language :)
+Generally article is going to be english but comments or explanations are going to be Turkish.
 
 ```shell
 
@@ -16,6 +17,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ badblocks -vs /dev/sda  # Hatalı blokları bulup tamir etmek için kullanırız
 
   $ cfdisk # Disk Bölümlerini gösterecektir
+```
+```shell
 
   $ ps aux  # Çalışan süreçleri görmemizi sağlar
 
@@ -28,6 +31,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ killall -9 process # Süreci ve ilintili süreçleri zorlayarak durdurur
 
   $ xkill # Mouse ile durdurmak istediğimiz süreci tıklayarak durdurabiliriz
+```
+```shell
 
   $ passwd  # Kullanıcı parolasını değiştirebilirsiniz
   # Kullanıcı parolaları /etc/shadow dosyasında şifrelenerek saklanır
@@ -43,6 +48,17 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ chage -l user # Kullanıcı bilgileri gösterilir
 
   $ su otherUser  # Bir başka kullanıcı yetkisiyle çalışır
+
+  $ chmod # Kullanıcı yetki değişikliği yapabiliriz
+          # $ ls -l
+          # -rw-rw-r-- 1 user user  999 Nov 10 09:05 life.c
+          # Ilk yetki grubu Dosya-Dizin sahibi,
+          # ikinci yetki grubu Dosya-Dizin grup sahibi,
+          # üçüncü yetki grubu Dosya-Dizin farklı yetkilendirilmiş grup
+  $ chmod u-x+rw myFile # Dosya'ya erişim yetkisi user yazma-okuma yapar çalıştıramaz
+
+```
+```shell
 
   $ cat > file
   #Bundan sonra yazacaklarınız dosyaya kaydedilecektir üstüne yazacaktır
@@ -65,6 +81,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ nl file # satırları numaralandırarak basar
 
   $ paste file1 file2 # satırları yanyana basar
+```
+```shell
 
   $ grep word file  # istenilen ifadeyi arayacaktır
 
@@ -80,6 +98,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   # Bulunan dosya {}'e parametre olarak gönderilir exec'den sonra çalıştırılır.
 
   $ find / -name filename | xargs rm -rf filename
+```
+```shell
 
   $ shred -n 5 --verbose
   # -n 5 defa uygula dosyaya rasgele bitler eklenerek kurtarılması engellenir.
@@ -92,6 +112,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   # popd komutuyla da o dizine gider orada kalırız
 
   $ env # O anki ortam değişkenlerini gösterir
+```
+```shell
 
   $ pwd ; cd Desktop # iki komutu aynı anda çalıştıracaktır bunu sağlayan ';'
 
@@ -116,6 +138,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ which echo  # dosya yolunu belirtir
 
   $ locate myFile # belirtilen dosyanın yolunu bulur içerisinde kelime varsa onuda bulur.
+```
+```shell
 
   $ dmidecode -t processor  # donanım özelliklerini verir
 
@@ -130,6 +154,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ hdparm /dev/sdb1 # hardisk bilgisi verir
 
   $ modinfo usbtouchscreen  # linux kernel bilgisini verir
+```
+```shell
 
   $ history # kullanılan komutlar kaydedilir buradan ulaşılabilir
 
@@ -142,6 +168,8 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
   $ nslookup www.google.com
 
   $ iptables
+```
+```shell
 
   $ sudo fdisk -l
 
@@ -155,5 +183,9 @@ Bazı çabuk unutulan kullanışlı komutları not olarak tutma niyetindeyim.
 
   $ sudo dd bs=4M if=myISO.iso of=/dev/sdb1 #Kolayca bootable disk oluşturabilirsiniz
 
+```
+```shell
+  $ strace  # Sistem çağırıları kontrol edilebilir
+            # örnek $ strace -ls yada -myCFile.out
 ```
 > to be continued…
