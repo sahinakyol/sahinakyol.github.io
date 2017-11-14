@@ -329,6 +329,16 @@ Moduller namespace'lere benzetilebilir.
     myFile.print "File IO!"
   end
 ```
+    Mode |  Meaning
+    -----:--------------------------------------------------------
+    "r"  |  Read-only
+    "r+" |  Read-write
+    "w"  |  Write-only Eğer dosya yoksa dosyayı oluşturur!
+    "w+" |  Read-write Eğer dosya yoksa dosyayı oluşturur!
+    "a"  |  Write-only Eğer dosya yoksa dosyayı oluşturur!
+    "a+" |  Read-write Eğer dosya yoksa dosyayı oluşturur!
+    "b"  |  Binary file
+    "t"  |  Text file
 
 ``` ruby
   (5..10).inject{|number1 , number2| number1 + number2 }
